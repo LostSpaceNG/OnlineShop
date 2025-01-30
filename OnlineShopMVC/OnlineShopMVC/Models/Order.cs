@@ -1,12 +1,18 @@
 ﻿namespace OnlineShopMVC.Models
 {
+    // Stores orders placed by users.
     public class Order
     {
         public int Id { get; set; }
-        public List<Product>? Products { get; set; }
+
+        // FK from Identity User
+        public string UserId { get; set; } = string.Empty;
+        public DateTime OrderDate { get; set; } = DateTime.UtcNow;
         public decimal TotalAmount { get; set; }
-        public DateTime DeliveryDate { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public User? UserData { get; set; }
+
+        // Status Options: Pending, Shipped, Delivered, Canceled
+        public string Status { get; set; } = "Pending";
+
+        public List<OrderItem> OrderItems { get; set; } = new();
     }
 }

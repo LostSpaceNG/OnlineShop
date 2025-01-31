@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using OnlineShopMVC.Data;
+using OnlineShopMVC.Repositories;
+using OnlineShopMVC.Repositories.Interfaces;
+using OnlineShopMVC.Services;
+using OnlineShopMVC.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +19,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 // email confirmation before logging in = false
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();  // tells Identity to store user data in our ApplicationDbContext
+
+// Register local Repositories and Services
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 

@@ -15,7 +15,7 @@ builder.Services.AddControllersWithViews();
 // Configure Database Connection (SQL Server)
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add Identity dor Authentication
+// Add Identity for Authentication
 // email confirmation before logging in = false
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();  // tells Identity to store user data in our ApplicationDbContext

@@ -1,0 +1,18 @@
+﻿@model Category
+
+<h2>Create Category</h2>
+
+<form method="post" action="/admin/categories/create">
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="Name" class="form-control" required />
+    </div>    
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea name="Description" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="/admin/categories" class="btn btn-secondary">Back</a>
+</form>

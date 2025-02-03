@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Product>
+
+<h2>Product List</h2>
+<a class="btn btn-primary" href="/admin/products/create">Create New Product</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>$@product.Price</td>
+                <td>@product.Category?.Name</td>
+                <td>
+                    <a class="btn btn-warning" href="/admin/products/edit/@product.Id">Edit</a>
+                    <a class="btn btn-danger" href="/admin/products/delete/@product.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

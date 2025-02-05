@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShopMVC.Models;
 using OnlineShopMVC.Services.Interfaces;
 
 namespace OnlineShopMVC.Controllers.Admin
 {
     [Route("admin/products")]
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
@@ -21,7 +23,7 @@ namespace OnlineShopMVC.Controllers.Admin
         public async Task<IActionResult> Index()
         {
             var products = await _productService.GetAllProductsAsync();
-            return View("Admin/Product/Index", products);
+            return View("~/Views/Admin/Product/Index.cshtml", products);
         }
 
         // Create Product - Form View
@@ -29,7 +31,7 @@ namespace OnlineShopMVC.Controllers.Admin
         public async Task<IActionResult> Create()
         {
             ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
-            return View("Admin/Product/Create");
+            return View("~/Views/Admin/Product/Create.cshtml");
         }
 
         // Create Product - Post Form
@@ -37,7 +39,7 @@ namespace OnlineShopMVC.Controllers.Admin
         public async Task<IActionResult> Create(Product product)
         {
             if (!ModelState.IsValid)
-                return View("Admin/Product/Create", product);
+                return View("~/Views/Admin/Product/Create.cshtml", product);
 
             await _productService.AddProductAsync(product);
             return RedirectToAction("Index");
@@ -52,7 +54,7 @@ namespace OnlineShopMVC.Controllers.Admin
                 return NotFound();
 
             ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
-            return View("Admin/Product/Edit", product);
+            return View("~/Views/Admin/Product/Edit.cshtml", product);
         }
 
         // Edit Product - Post Form
@@ -60,7 +62,7 @@ namespace OnlineShopMVC.Controllers.Admin
         public async Task<IActionResult> Edit(int id, Product product)
         {
             if (!ModelState.IsValid)
-                return View("Admin/Product/Edit", product);
+                return View("~/Views/Admin/Product/Edit.cshtml", product);
 
             await _productService.UpdateProductAsync(product);
             return RedirectToAction("Index");
@@ -74,7 +76,7 @@ namespace OnlineShopMVC.Controllers.Admin
             if (product == null)
                 return NotFound();
 
-            return View("Admin/Product/Delete", product);
+            return View("~/Views/Admin/Product/Delete.cshtml", product);
         }
 
         // Delete Product - Post Form

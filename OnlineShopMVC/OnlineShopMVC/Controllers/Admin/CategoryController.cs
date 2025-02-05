@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShopMVC.Models;
 using OnlineShopMVC.Services.Interfaces;
 using System.Runtime.InteropServices;
@@ -6,6 +7,7 @@ using System.Runtime.InteropServices;
 namespace OnlineShopMVC.Controllers.Admin
 {
     [Route("admin/categories")]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
@@ -20,14 +22,14 @@ namespace OnlineShopMVC.Controllers.Admin
         public async Task<IActionResult> Index()
         {
             var categories = await _categoryService.GetAllCategoriesAsync();
-            return View("Admin/Category/Index", categories);
+            return View("~/Views/Admin/Category/Index.cshtml", categories);
         }
 
         // Create Category - Form View
         [HttpGet("create")]
         public IActionResult Create()
         {
-            return View("Admin/Category/Create");
+            return View("~/Views/Admin/Category/Create.cshtml");
         }
 
         // Create Category - Post Form
@@ -35,7 +37,7 @@ namespace OnlineShopMVC.Controllers.Admin
         public async Task<IActionResult> Create(Category category)
         {
             if (!ModelState.IsValid)
-                return View("Admin/Category/Create", category);
+                return View("~/Views/Admin/Category/Create.cshtml", category);
 
             await _categoryService.AddCategoryAsync(category);
             return RedirectToAction("Index");
@@ -49,7 +51,7 @@ namespace OnlineShopMVC.Controllers.Admin
             if (category == null)
                 return NotFound();
 
-            return View("Admin/Category/Edit", category);
+            return View("~/Views/Admin/Category/Edit.cshtml", category);
         }
 
         // Edit Category - Post Form
@@ -57,7 +59,7 @@ namespace OnlineShopMVC.Controllers.Admin
         public async Task<IActionResult> Edit(int id, Category category)
         {
             if (!ModelState.IsValid)
-                return View("Admin/Category/Edit", category);
+                return View("~/Views/Admin/Category/Edit.cshtml", category);
 
             await _categoryService.UpdateCategoryAsync(category);
             return RedirectToAction("Index");
@@ -71,7 +73,7 @@ namespace OnlineShopMVC.Controllers.Admin
             if (category == null)
                 return NotFound();
 
-            return View("Admin/Category/Delete", category);
+            return View("~/Views/Admin/Category/Delete.cshtml", category);
         }
 
         // Delete Category - Post Form

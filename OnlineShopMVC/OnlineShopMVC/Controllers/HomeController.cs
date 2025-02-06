@@ -1,21 +1,47 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShopMVC.Models;
+using OnlineShopMVC.Services.Interfaces;
 
 namespace OnlineShopMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProductService productService, ICategoryService categoryService)
         {
-            _logger = logger;
+            _productService = productService;
+            _categoryService = categoryService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var products = await _productService.GetAllProductsAsync();
+            return View(products);
+        }
+
+        public async Task<IActionResult> ProductDetails(int id)
+        {
+            var product = await _productService.GetProductByIdAsync(id);
+
+            if (product == null)
+                return NotFound();
+
+            return View(product);
+        }
+
+        public async Task<IActionResult> ProductsByCategory(int categoryId)
+        {
+            var products = await _productService.GetProductsByCategoryAsync(categoryId);
+            var category = await _categoryService.GetCategoryByIdAsync(categoryId);
+
+            if (category == null)
+                return NotFound();
+
+            ViewBag.CategoryName = category.Name;
+            return View(products);
         }
 
         public IActionResult Privacy()

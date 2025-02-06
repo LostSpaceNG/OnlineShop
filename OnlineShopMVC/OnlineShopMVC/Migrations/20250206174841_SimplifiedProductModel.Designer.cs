@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShopMVC.Data;
 
@@ -11,9 +12,11 @@ using OnlineShopMVC.Data;
 namespace OnlineShopMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250206174841_SimplifiedProductModel")]
+    partial class SimplifiedProductModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -433,7 +436,7 @@ namespace OnlineShopMVC.Migrations
                             Id = 1,
                             CategoryId = 2,
                             Description = "Powerful laptop for gaming and work",
-                            ImageUrl = "/images/laptop.jpg",
+                            ImageUrl = "/images/laptop-1.jpg",
                             Name = "Laptop",
                             Price = 1259.99m,
                             StockQuantity = 30
@@ -443,7 +446,7 @@ namespace OnlineShopMVC.Migrations
                             Id = 2,
                             CategoryId = 2,
                             Description = "Latest model with integrated AI Assistant",
-                            ImageUrl = "/images/phone.jpg",
+                            ImageUrl = "/images/phone-1.jpg",
                             Name = "Smartphone",
                             Price = 699.99m,
                             StockQuantity = 50
@@ -453,7 +456,7 @@ namespace OnlineShopMVC.Migrations
                             Id = 3,
                             CategoryId = 1,
                             Description = "Reflect upon different aspects of life with Marcus Aurelius",
-                            ImageUrl = "/images/meditationsBook.jpg",
+                            ImageUrl = "/images/meditationsBook.jpeg",
                             Name = "Meditations",
                             Price = 19.99m,
                             StockQuantity = 25

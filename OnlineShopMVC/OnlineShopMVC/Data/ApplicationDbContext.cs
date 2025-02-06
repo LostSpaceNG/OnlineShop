@@ -45,11 +45,11 @@ namespace OnlineShopMVC.Data
 
             // Seed Products
             modelBuilder.Entity<Product>().HasData(
-                new Product { Id = 1, Name = "Laptop", Description = "Powerful laptop for gaming and work", Price = 1259.99M, StockQuantity = 30, Media = [ "/images/laptop-1.jpg" ], CategoryId = 2 },
-                new Product { Id = 2, Name = "Smartphone", Description = "Latest model with integrated AI Assistant", Price = 699.99M, StockQuantity = 50, Media = [ "/images/phone-1.jpg" ], CategoryId = 2 },
-                new Product { Id = 3, Name = "Meditations", Description = "Reflect upon different aspects of life with Marcus Aurelius", Price = 19.99M, StockQuantity = 25, Media = [ "/images/meditationsBook.jpg" ], CategoryId = 1 },
-                new Product { Id = 4, Name = "Programming Book", Description = "Learn C# with this in-depth guide", Price = 29.99M, StockQuantity = 75, Media = [ "/images/cSharpBook.jpg" ], CategoryId = 1 },
-                new Product { Id = 5, Name = "T-Shirt", Description = "100% cotton t-shirt for both men and women", Price = 14.99M, StockQuantity = 100, Media = [ "/images/tShirt.jpg" ], CategoryId = 3 }
+                new Product { Id = 1, Name = "Laptop", Description = "Powerful laptop for gaming and work", Price = 1259.99M, StockQuantity = 30, ImageUrl = "/images/laptop.jpg", CategoryId = 2 },
+                new Product { Id = 2, Name = "Smartphone", Description = "Latest model with integrated AI Assistant", Price = 699.99M, StockQuantity = 50, ImageUrl = "/images/phone.jpg", CategoryId = 2 },
+                new Product { Id = 3, Name = "Meditations", Description = "Reflect upon different aspects of life with Marcus Aurelius", Price = 19.99M, StockQuantity = 25, ImageUrl = "/images/meditationsBook.jpg", CategoryId = 1 },
+                new Product { Id = 4, Name = "Programming Book", Description = "Learn C# with this in-depth guide", Price = 29.99M, StockQuantity = 75, ImageUrl = "/images/cSharpBook.jpg", CategoryId = 1 },
+                new Product { Id = 5, Name = "T-Shirt", Description = "100% cotton t-shirt for both men and women", Price = 14.99M, StockQuantity = 100, ImageUrl = "/images/tShirt.jpg", CategoryId = 3 }
             );
         }
     }

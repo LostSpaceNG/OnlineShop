@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Product>
 
 @{
-    ViewData["Title"] = "Shop - Product Catalog";
+    ViewData["Title"] = ViewBag.CategoryName;
 }
 
-<h1 class="text-center">Product Catalog</h1>
+<h1 class="text-center">Products in @ViewBag.CategoryName</h1>
 
 <div class="row">
     @foreach (var product in Model)
@@ -21,4 +21,5 @@
             </div>
         </div>
     }
+    
 </div>

@@ -13,6 +13,10 @@
         <h1>@Model.Name</h1>
         <p>@Model.Description</p>
         <p class="fw-bold">Price: $@Model.Price</p>
-        <a href="#" class="btn btn-success">Add To Cart</a>
+        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+            <input type="hidden" name="productId" value="@Model.Id" />
+            <input type="number" name="quantity" value="1" min="1" class="text-center d-block mb-3" style="width: 80px;" />
+            <button type="submit" class="btn btn-success">Add To Cart</button>
+        </form>
     </div>
 </div>

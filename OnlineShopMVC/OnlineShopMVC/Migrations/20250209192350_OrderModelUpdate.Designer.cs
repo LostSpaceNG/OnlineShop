@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShopMVC.Data;
 
@@ -11,9 +12,11 @@ using OnlineShopMVC.Data;
 namespace OnlineShopMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250209192350_OrderModelUpdate")]
+    partial class OrderModelUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -398,8 +401,7 @@ namespace OnlineShopMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Payments");
                 });
@@ -588,8 +590,8 @@ namespace OnlineShopMVC.Migrations
             modelBuilder.Entity("OnlineShopMVC.Models.Payment", b =>
                 {
                     b.HasOne("OnlineShopMVC.Models.Order", "Order")
-                        .WithOne("Payment")
-                        .HasForeignKey("OnlineShopMVC.Models.Payment", "OrderId")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -626,8 +628,6 @@ namespace OnlineShopMVC.Migrations
             modelBuilder.Entity("OnlineShopMVC.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
-
-                    b.Navigation("Payment");
                 });
 #pragma warning restore 612, 618
         }

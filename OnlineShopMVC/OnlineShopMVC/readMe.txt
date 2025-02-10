@@ -43,6 +43,11 @@ Components Documentation
 
 	- ApplicationUser.cs: extends 'IdentityUser' to include additional custom fields (e.g. FullName, Address, etc.).
 
+# View Models
+
+	- LoginViewModel.cs
+	- RegisterViewModel.cs
+
 # Account Management
 
 	- AccountController.cs: handles registration, login, logout and access-denied scenarios using 'UserManager' and 'SignInManager'.
@@ -64,18 +69,56 @@ Components Documentation
 
 
 ///
-/// Shopping Cart Functionality
+/// Shopping Cart
 ///
 
 # Database Storage for logged-in users
 
-	- ICartService and CartService: Handle database-backed cart operations.
+	- ICartService and CartService: handle database-backed cart operations.
 
 # Session Storage for guest users
 
-	- /Helpers/SessionCartHelper.cs: Manages cart items stored in the session.
+	- /Helpers/SessionCartHelper.cs: manages cart items stored in the session.
 
-# Controller and Model
+# Controllers and Models
 
 	- CartController.cs: handles cart-related actions, selecting the appropriate storage mechanism based on user authentication.
 	- CartItem.cs: represents items in the cart.
+
+
+
+///
+/// Checkout and Order Processing
+///
+
+# Shipping Details
+	
+	- Users fill in their shipping address and select a payment method (Card or PayPal) on the checkout form.
+
+# Order Creation 
+
+	- The system collects the cart items (from session for guests or the database for logged-in users) and creates an 'Order' record with shipping details and the total amount.
+
+# Order Items
+
+	- Each item in the cart is recorded as an 'OrderItem', storing the product details, quantity, and price at purchase time.
+
+# Payment Simulation
+
+	- A 'Payment' record is generated using the user-selected payment method, simulating a successful transaction.
+
+# Cart Clearance
+
+	- After order placement, the cart is cleared from session storage or the database.
+
+# Confirmation Page
+
+	- Users are redirected to an Order Confirmation page displaying order details and the chosen payment method.
+
+# Controllers and Models
+
+	- OrderController.cs
+	- Order.cs
+	- OrderItem.cs
+	- Payment.cs
+	- CheckoutViewModel.cs

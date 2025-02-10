@@ -44,5 +44,5 @@ else
     </table>
 
     <h3>Total: @Model.Where(item => item.Product != null).Sum(item => item.Product.Price * item.Quantity).ToString("C")</h3>
-    <a href="/Checkout" class="btn btn-success">Proceed to Checkout</a>
+    <a asp-controller="Order" asp-action="Checkout" class="btn btn-success">Proceed to Checkout</a>
 }

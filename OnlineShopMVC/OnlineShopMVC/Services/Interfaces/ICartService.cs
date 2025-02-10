@@ -8,5 +8,6 @@ namespace OnlineShopMVC.Services.Interfaces
         Task AddToCartAsync(string userId, int productId, Product product, int quantity);
         Task RemoveFromCartAsync(string userId, int productId);
         Task UpdateCartQuantityAsync(string userId, int productId, int quantity);
+        Task ClearCartAsync(string userId);
     }
 }

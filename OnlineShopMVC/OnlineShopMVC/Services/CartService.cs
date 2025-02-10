@@ -73,5 +73,12 @@ namespace OnlineShopMVC.Services
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task ClearCartAsync(string userId)
+        {
+            var items = _context.CartItems.Where(ci => ci.UserId == userId);
+            _context.CartItems.RemoveRange(items);
+            await _context.SaveChangesAsync();
+        }
     }
 }

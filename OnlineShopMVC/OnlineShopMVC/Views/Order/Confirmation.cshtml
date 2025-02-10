@@ -1,0 +1,34 @@
+﻿@model Order
+
+<h2>Order Confirmation</h2>
+
+<p>Thank you for your purchase! Your order number is <strong>@Model.Id</strong>.</p>
+<p>Order Date: @Model.OrderDate.ToString("g")</p>
+<p>Total Amount: @Model.TotalAmount.ToString("C");</p>
+<p>Payment Method: @Model.Payment?.PaymentMethod</p>
+
+<h3>Order Details:</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price.ToString("C")</td>
+                <td>@((item.Quantity * item.Price).ToString("C"))</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Continue Shopping</a>

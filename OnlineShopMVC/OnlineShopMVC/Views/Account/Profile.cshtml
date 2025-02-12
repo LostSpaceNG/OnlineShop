@@ -1,0 +1,59 @@
+﻿@model MyAccountViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h2>My Account</h2>
+
+<div class="card mb-4">
+    <div class="card-header">
+        Profile Information
+    </div>
+    <div class="card-body">
+        <p><strong>Email:</strong> @Model.User!.Email</p>
+        <p><strong>Full Name:</strong> @Model.User.FullName</p>
+
+        <a asp-action="EditProfile" class="btn btn-secondary">Edit Profile</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        Order History
+    </div>
+    <div class="card-body">
+        @if (!Model.Orders!.Any())
+        {
+            <p>You have not placed any orders yet.</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Date</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model.Orders!)
+                    {
+                        <tr>
+                            <td>@order.Id</td>
+                            <td>@order.OrderDate.ToString("g")</td>
+                            <td>@order.TotalAmount.ToString("C")</td>
+                            <td>@order.Status</td>
+                            <td>
+                                <a asp-controller="Order" asp-action="Confirmation" asp-route-orderId="@order.Id" class="btn btn-sm btn-primary">View</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

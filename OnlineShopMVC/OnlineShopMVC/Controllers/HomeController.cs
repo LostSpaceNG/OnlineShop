@@ -16,9 +16,25 @@ namespace OnlineShopMVC.Controllers
             _categoryService = categoryService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-            var products = await _productService.GetAllProductsAsync();
+            IEnumerable<Product> products;
+
+            // If filters are provided, use the search functionality
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                products = await _productService.SearchProductsAsync(searchTerm);
+            }
+            else
+            {
+                // Otherwise get all products
+                products = await _productService.GetAllProductsAsync();
+            }
+
+            var categories = await _categoryService.GetAllCategoriesAsync();
+            ViewBag.Categories = categories;
+            ViewBag.SearchTerm = searchTerm;
+
             return View(products);
         }
 
@@ -41,12 +57,13 @@ namespace OnlineShopMVC.Controllers
                 return NotFound();
 
             ViewBag.CategoryName = category.Name;
-            return View(products);
-        }
 
-        public IActionResult Privacy()
-        {
-            return View();
+            // Pass categories for sidebar (to keep it consistent)
+            var categories = await _categoryService.GetAllCategoriesAsync();
+            ViewBag.Categories = categories;
+
+            // Reuse the Index view to display filtered products
+            return View("Index", products);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

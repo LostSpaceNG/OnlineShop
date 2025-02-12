@@ -1,6 +1,7 @@
 ﻿using OnlineShopMVC.Models;
 using OnlineShopMVC.Repositories.Interfaces;
 using OnlineShopMVC.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineShopMVC.Services
 {
@@ -41,6 +42,20 @@ namespace OnlineShopMVC.Services
         public async Task DeleteProductAsync(int id)
         {
             await _productRepository.DeleteAsync(id);
+        }
+
+        public async Task<IEnumerable<Product>> SearchProductsAsync(string searchTerm)
+        {
+            var query = _productRepository.GetAllQueryable();
+
+            // Filter by search term, if provided
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.Name.Contains(searchTerm) || p.Description.Contains(searchTerm));
+            }
+
+            // Include category details and execute the query
+            return await query.Include(p => p.Category).ToListAsync();
         }
     }
 }

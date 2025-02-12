@@ -18,5 +18,11 @@ namespace OnlineShopMVC.Repositories
         {
             return await _context.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
         }
+
+        // Builds and returns a query for getting products
+        public IQueryable<Product> GetAllQueryable()
+        {
+            return _context.Products.AsQueryable();
+        }
     }
 }

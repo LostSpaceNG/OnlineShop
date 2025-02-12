@@ -12,7 +12,5 @@ namespace OnlineShopMVC.Models
         [Required]
         public DateTime BirthDate { get; set; }
         public string? Address { get; set; }
-        public List<Order>? OrderHistory { get; set; }
-        public List<Product>? FavoriteProducts { get; set; }
     }
 }

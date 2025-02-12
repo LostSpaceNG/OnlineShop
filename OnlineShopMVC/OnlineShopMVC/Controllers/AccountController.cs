@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OnlineShopMVC.Data;
 using OnlineShopMVC.Models;
 using OnlineShopMVC.ViewModels;
+using System.Security.Claims;
 
 namespace OnlineShopMVC.Controllers
 {
@@ -9,11 +13,13 @@ namespace OnlineShopMVC.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicationDbContext _context;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         // Register - GET
@@ -91,6 +97,86 @@ namespace OnlineShopMVC.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        // User Profile
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            // Find User by ID
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId!);
+
+            if (user == null)
+                return NotFound();
+
+            // Retrieve orders for the user
+            var orders = await _context.Orders
+                .Where(o => o.UserId == userId)
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .ToListAsync();
+
+            var model = new MyAccountViewModel
+            {
+                User = user,
+                Orders = orders
+            };
+
+            return View(model);
+        }
+
+        // Edit Profile - GET
+        [HttpGet]
+        public async Task<IActionResult> EditProfile()
+        {
+            // Find User by ID
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId!);
+
+            if (user == null)
+                return NotFound();
+
+            var model = new EditProfileViewModel
+            {
+                Email = user.Email!,
+                FullName = user.FullName
+            };
+
+            return View(model);
+        }
+
+        // Edit Profile - POST
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(EditProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            // Find User by ID
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId!);
+
+            if (user == null)
+                return NotFound();
+
+            // Update user properties
+            user.Email = model.Email;
+            user.FullName = model.FullName;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Profile");
+            }
+            
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View(model);
         }
     }
 }

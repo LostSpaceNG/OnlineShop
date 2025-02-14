@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ProductAdminViewModel
 
 @{
     ViewData["Title"] = "Admin";
@@ -9,12 +9,32 @@
 <form method="post" action="/admin/products/create">
     <div class="mb-3">
         <label class="mb-1">Name</label>
-        <input type="text" name="Name" class="form-control" required />
+        <input asp-for="Name" type="text" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label class="mb-1">Price</label>
-        <input type="number" name="Price" class="form-control" step="0.01" required />
+        <input asp-for="PriceInput" type="text" class="form-control" placeholder="19,99" />
+        <span asp-validation-for="PriceInput" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1">Stock Quantity</label>
+        <input asp-for="StockQuantity" type="number" class="form-control" min="0" />
+        <span asp-validation-for="StockQuantity" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1">Image Url</label>
+        <input asp-for="ImageUrl" type="text" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
 
     <div class="mb-3">

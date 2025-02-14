@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ProductAdminViewModel
 
 @{
     ViewData["Title"] = "Admin";
@@ -11,12 +11,32 @@
 
     <div class="mb-3">
         <label class="mb-1">Name</label>
-        <input type="text" name="Name" class="form-control" value="@Model.Name" required />
+        <input asp-for="Name" type="text" class="form-control" value="@Model.Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1">Description</label>
+        <textarea asp-for="Description" class="form-control">@Model.Description</textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
         <label class="mb-1">Price</label>
-        <input type="number" step="0.01" name="Price" class="form-control" value="@Model.Price" required />
+        <input asp-for="PriceInput" type="text" class="form-control" placeholder="19,99" value="@Model.PriceInput" />
+        <span asp-validation-for="PriceInput" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1">Stock Quantity</label>
+        <input asp-for="StockQuantity" type="number" class="form-control" min="0" value="@Model.StockQuantity" />
+        <span asp-validation-for="StockQuantity" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="mb-1">Image Url</label>
+        <input asp-for="ImageUrl" type="text" class="form-control" value="@Model.ImageUrl" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
     </div>
 
     <div class="mb-3">

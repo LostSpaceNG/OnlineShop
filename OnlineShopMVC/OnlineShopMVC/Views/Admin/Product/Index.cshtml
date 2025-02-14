@@ -1,7 +1,11 @@
 ﻿@model IEnumerable<Product>
 
-<h2>Product List</h2>
-<a class="btn btn-primary" href="/admin/products/create">Create New Product</a>
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<h2 class="my-4">Product List</h2>
+<a class="btn btn-primary mb-2" href="/admin/products/create">Create New Product</a>
 
 <table class="table">
     <thead>
@@ -17,10 +21,10 @@
         {
             <tr>
                 <td>@product.Name</td>
-                <td>$@product.Price</td>
+                <td>@product.Price.ToString("C")</td>
                 <td>@product.Category?.Name</td>
                 <td>
-                    <a class="btn btn-warning" href="/admin/products/edit/@product.Id">Edit</a>
+                    <a class="btn btn-warning mb-2 mb-sm-0" href="/admin/products/edit/@product.Id">Edit</a>
                     <a class="btn btn-danger" href="/admin/products/delete/@product.Id">Delete</a>
                 </td>
             </tr>

@@ -1,10 +1,14 @@
 ﻿@model IEnumerable<CartItem>
 
-<h2>Your Shopping Cart</h2>
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h2 class="text-center my-4">Your Shopping Cart</h2>
 
 @if (!Model.Any())
 {
-    <p>Your cart is empty!</p>
+    <p class="text-center">Your cart is empty!</p>
 }
 else
 {
@@ -24,10 +28,10 @@ else
                 <tr>
                     <td>@item.Product.Name</td>
                     <td>
-                        <form asp-action="UpdateQuantity" method="post">
+                        <form asp-action="UpdateQuantity" method="post" class="d-sm-flex align-items-center gap-2">
                             <input type="hidden" name="productId" value="@item.ProductId" />
-                            <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control" style="width: 80px;" />
-                            <button type="submit" class="btn btn-sm btn-primary mt-1">Update</button>
+                            <input type="number" name="quantity" value="@item.Quantity" min="1" class="form-control d-inline-block" style="max-width: 80px;" />
+                            <button type="submit" class="btn btn-sm btn-primary mt-2 mt-sm-0">Update</button>
                         </form>
                     </td>
                     <td>@item.Product.Price.ToString("C")</td>
@@ -43,6 +47,8 @@ else
         </tbody>
     </table>
 
-    <h3>Total: @Model.Where(item => item.Product != null).Sum(item => item.Product.Price * item.Quantity).ToString("C")</h3>
-    <a asp-controller="Order" asp-action="Checkout" class="btn btn-success">Proceed to Checkout</a>
+    <h3 class="text-center my-4">Total: @Model.Where(item => item.Product != null).Sum(item => item.Product.Price * item.Quantity).ToString("C")</h3>
+    <div class="text-center">
+        <a asp-controller="Order" asp-action="Checkout" class="btn btn-success">Proceed to Checkout</a>
+    </div>
 }

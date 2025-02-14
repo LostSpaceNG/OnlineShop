@@ -6,7 +6,7 @@
     var searchTerm = ViewBag.SearchTerm as string;
 }
 
-<h1 class="text-center">Product Catalog</h1>
+<h1 class="text-center my-4">Product Catalog</h1>
 
 <!-- Display current search filters -->
 @if (!string.IsNullOrEmpty(ViewBag.SearchTerm))
@@ -14,13 +14,13 @@
     <p>Showing results for "@ViewBag.SearchTerm"</p>
 }
 
-<div class="container mt-3">
+<div class="container py-3">
     <div class="row">
         <!-- Sidebar for Categories -->
-        <div class="col-md-3">
-            <div class="card sticky-top">
+        <div class="col-md-3 mb-4">
+            <div class="card sticky-top bg-dark" style="top: 50px;">
                 <div class="card-header">
-                    <h5>Categories</h5>
+                    <h5 class="my-1 text-light">Categories</h5>
                 </div>
                 <ul class="list-group list-group-flush">
                     @if (categories != null)
@@ -47,13 +47,13 @@
             <div class="row">
                 @foreach (var product in Model)
                 {
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-6 mb-4">
                         <div class="card">
                             <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" />
                             <div class="card-body">
                                 <h5 class="card-title">@product.Name</h5>
-                                <p class="card-text text-muted">@product.Description</p>
-                                <p class="card-text fw-bold">Price: $@product.Price</p>
+                                <p class="card-text text-muted text-truncate">@product.Description</p>
+                                <p class="card-text fw-bold">Price: @product.Price.ToString("C")</p>
                                 <a asp-action="ProductDetails" asp-route-id="@product.Id" class="btn btn-primary">View Details</a>
                             </div>
                         </div>

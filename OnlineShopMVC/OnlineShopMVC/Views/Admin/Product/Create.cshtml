@@ -1,20 +1,24 @@
 ﻿@model Product
 
-<h2>Add New Product</h2>
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<h2 class="my-4">Add New Product</h2>
 
 <form method="post" action="/admin/products/create">
     <div class="mb-3">
-        <label>Name</label>
+        <label class="mb-1">Name</label>
         <input type="text" name="Name" class="form-control" required />
     </div>
 
     <div class="mb-3">
-        <label>Price</label>
+        <label class="mb-1">Price</label>
         <input type="number" name="Price" class="form-control" step="0.01" required />
     </div>
 
     <div class="mb-3">
-        <label>Category</label>
+        <label class="mb-1">Category</label>
         <select name="CategoryId" class="form-control">
             @foreach (var category in ViewBag.Categories)
             {

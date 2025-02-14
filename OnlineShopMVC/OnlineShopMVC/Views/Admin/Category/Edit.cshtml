@@ -1,17 +1,21 @@
 ﻿@model Category
 
-<h2>Edit Category</h2>
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<h2 class="my-4">Edit Category</h2>
 
 <form method="post" action="/admin/categories/edit/@Model.Id">
     <input type="hidden" name="Id" value="@Model.Id" />
     
     <div class="mb-3">
-        <label>Name</label>
+        <label class="mb-1">Name</label>
         <input type="text" name="Name" class="form-control" value="@Model.Name" required />
     </div>
 
     <div class="mb-3">
-        <label>Description</label>
+        <label class="mb-1">Description</label>
         <textarea name="Description" class="form-control">@Model.Description</textarea>
     </div>
 

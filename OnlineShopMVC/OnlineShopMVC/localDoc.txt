@@ -1,17 +1,9 @@
-﻿/ *******************************************
-/ Welcome to OnlineShopMVC Project
-/ *******************************************
-
-About this project
-- Todo
+﻿------------------------------------
+		Local Documentation
+------------------------------------
 
 
-Components Documentation
-
-
-///
-/// REPOSITORY and SERVICE Layers
-///
+/// REPOSITORY and SERVICE Layers ///
 
 # /Repositories
 	
@@ -31,9 +23,7 @@ Components Documentation
 
 
 
-///
-/// Authentication & Authorization
-///
+/// Authentication & Authorization ///
 
 # ASP.NET Core Identity
 
@@ -68,9 +58,7 @@ Components Documentation
 
 
 
-///
-/// Shopping Cart
-///
+/// Shopping Cart ///
 
 # Database Storage for logged-in users
 
@@ -87,9 +75,7 @@ Components Documentation
 
 
 
-///
-/// Checkout and Order Processing
-///
+/// Checkout and Order Processing ///
 
 # Shipping Details
 	

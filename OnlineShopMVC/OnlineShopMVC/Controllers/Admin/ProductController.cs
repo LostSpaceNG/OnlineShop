@@ -23,6 +23,7 @@ namespace OnlineShopMVC.Controllers.Admin
         public async Task<IActionResult> Index()
         {
             var products = await _productService.GetAllProductsAsync();
+            ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
             return View("~/Views/Admin/Product/Index.cshtml", products);
         }
 
@@ -76,6 +77,7 @@ namespace OnlineShopMVC.Controllers.Admin
             if (product == null)
                 return NotFound();
 
+            ViewBag.Categories = await _categoryService.GetAllCategoriesAsync();
             return View("~/Views/Admin/Product/Delete.cshtml", product);
         }
 

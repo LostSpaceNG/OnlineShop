@@ -14,11 +14,25 @@
             <h1 class="mb-4">@Model.Name</h1>
             <p class="py-3 px-2 border-bottom border-top">@Model.Description</p>
             <p class="fw-bold my-3">Price: @Model.Price.ToString("C")</p>
-            <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-flex align-items-center justify-content-center justify-content-sm-start gap-3">
-                <input type="hidden" name="productId" value="@Model.Id" />
-                <input type="number" name="quantity" value="1" min="1" class="form-control" style="width: 80px;" />
-                <button type="submit" class="btn btn-success">Add To Cart</button>
-            </form>
+
+            @if (Model.StockQuantity == 0)
+            {
+                <button class="btn btn-secondary" disabled>Sold Out</button>
+            }
+            else
+            {
+                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-flex align-items-center justify-content-center justify-content-sm-start gap-3">
+                    <input type="hidden" name="productId" value="@Model.Id" />
+                    <input type="number" name="quantity" value="1" min="1" class="form-control" style="width: 80px;" />
+                    <button type="submit" class="btn btn-success">Add To Cart</button>
+                </form>
+            }
+
+            <!-- Display Stock Error for insufficient stock -->
+            @if (TempData["StockError"] != null)
+            {
+                <div class="alert alert-danger mt-3">@TempData["StockError"]</div>
+            }
         </div>
     </div>
 </div>

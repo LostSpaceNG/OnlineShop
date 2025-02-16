@@ -47,8 +47,16 @@ else
         </tbody>
     </table>
 
-    <h3 class="text-center my-4">Total: @Model.Where(item => item.Product != null).Sum(item => item.Product.Price * item.Quantity).ToString("C")</h3>
-    <div class="text-center">
-        <a asp-controller="Order" asp-action="Checkout" class="btn btn-success">Proceed to Checkout</a>
-    </div>
+    <!-- Display Quantity Error for insufficient stock -->
+    @if (TempData["CartQuantityError"] != null)
+    {
+        <div class="alert alert-danger mt-3">@TempData["CartQuantityError"]</div>
+    }
+    else
+    {
+        <h3 class="text-center my-4">Total: @Model.Where(item => item.Product != null).Sum(item => item.Product.Price * item.Quantity).ToString("C")</h3>
+        <div class="text-center">
+            <a asp-controller="Order" asp-action="Checkout" class="btn btn-success">Proceed to Checkout</a>
+        </div>
+    }
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OnlineShopMVC.Data;
 using OnlineShopMVC.Helpers;
 using OnlineShopMVC.Models;
+using OnlineShopMVC.Services;
 using OnlineShopMVC.Services.Interfaces;
 using OnlineShopMVC.ViewModels;
 using System.Security.Claims;
@@ -51,6 +52,28 @@ namespace OnlineShopMVC.Controllers
             {
                 ModelState.AddModelError("", "Your cart is empty.");
                 return View(model);
+            }
+
+            foreach (var item in cartItems)
+            {
+                // Ensure that product details are available
+                if (item.Product == null)
+                {
+                    item.Product = (await _context.Products.FindAsync(item.ProductId))!;
+                }
+
+                // Check Stock
+                if (item.Quantity > item.Product.StockQuantity)
+                {
+                    ModelState.AddModelError("", $"Insufficient stock for '{item.Product.Name}'. Only {item.Product.StockQuantity} available.");
+                    return View(model);
+                }
+
+                // Subtract the ordered quantity from the product's stock
+                item.Product.StockQuantity -= item.Quantity;
+
+                // Update the product in the database
+                _context.Products.Update(item.Product);
             }
 
             // Create a new order

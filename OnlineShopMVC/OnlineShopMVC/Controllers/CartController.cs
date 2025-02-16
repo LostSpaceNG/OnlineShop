@@ -45,6 +45,17 @@ namespace OnlineShopMVC.Controllers
                 quantity = 1;
 
             var product = await _productService.GetProductByIdAsync(productId);
+            
+            if (product == null)
+                return NotFound();
+
+            // Check Stock
+            if (quantity > product.StockQuantity)
+            {
+                // Use TempData to pass the error message to the next request
+                TempData["StockError"] = $"Insufficient stock for '{product.Name}'. Available: {product.StockQuantity}.";
+                return RedirectToAction("ProductDetails", "Home", new { id = productId });
+            }
 
             if (User.Identity!.IsAuthenticated)
             {
@@ -67,6 +78,22 @@ namespace OnlineShopMVC.Controllers
         {
             if (quantity < 1)
                 quantity = 1;
+
+            // Retrieve the product details for stock info.
+            var product = await _productService.GetProductByIdAsync(productId);
+            
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            // Check Stock
+            if (quantity > product.StockQuantity)
+            {
+                // Use TempData to pass the error message
+                TempData["CartQuantityError"] = $"Insufficient stock for '{product.Name}'. Available: {product.StockQuantity}.";
+                return RedirectToAction("Index");
+            }
 
             if (User.Identity!.IsAuthenticated)
             {

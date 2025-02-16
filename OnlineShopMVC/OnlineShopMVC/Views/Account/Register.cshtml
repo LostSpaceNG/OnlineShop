@@ -31,28 +31,12 @@
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
 
+    <!-- Display ModelOnly Errors -->
+    <div asp-validation-summary="ModelOnly" class="text-danger text-center error-summary"></div>
+
     <button type="submit" class="btn btn-primary my-3">Register</button>
 </form>
 
 <div class="text-center">
     <a asp-action="Login">Already have an account? Login here</a>
-</div>
-
-<!-- Password Rules -->
-<div class="accordion my-4 form-group-custom mx-auto" id="accordionForRules">
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                Password Rules
-            </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionForRules">
-            <div class="accordion-body">
-                <p class="my-1">Passwords must be at least 6 characters.</p>
-                <p class="my-1">Passwords must have at least one non alphanumeric character.</p>
-                <p class="my-1">Passwords must have at least one digit ('0'-'9').</p>
-                <p class="my-1">Passwords must have at least one uppercase ('A'-'Z').</p>
-            </div>
-        </div>
-    </div>
 </div>

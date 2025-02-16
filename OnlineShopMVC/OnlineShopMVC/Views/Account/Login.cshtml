@@ -26,14 +26,5 @@
     <a asp-action="Register" class="text-center">Don't have an account? Register here</a>
 </div>
 
-<!-- Display Login Errors -->
-@if (!ViewData.ModelState.IsValid)
-{
-    foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-    {
-        if (error.ErrorMessage.Contains("Invalid"))
-        {
-            <p class="text-danger my-1 text-center">@error.ErrorMessage</p>
-        }
-    }
-}
+<!-- Display ModelOnly Errors -->
+<div asp-validation-summary="ModelOnly" class="text-danger text-center error-summary mb-4"></div>
